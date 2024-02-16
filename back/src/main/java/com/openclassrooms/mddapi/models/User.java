@@ -35,6 +35,10 @@ public class User {
     private String email;
 
     @NonNull
+    @Size(max = 120)
+    private String password;
+
+    @NonNull
     @Size(max = 20)
     @Column(name = "last_name")
     private String lastName;
@@ -44,10 +48,6 @@ public class User {
     @Column(name = "first_name")
     private String firstName;
 
-    @NonNull
-    @Size(max = 120)
-    private String password;
-
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -55,5 +55,4 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

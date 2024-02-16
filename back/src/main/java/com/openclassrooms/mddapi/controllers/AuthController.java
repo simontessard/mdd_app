@@ -52,7 +52,6 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        boolean isAdmin = false;
         User user = this.usersRepository.findByEmail(userDetails.getUsername()).orElse(null);
 
         return ResponseEntity.ok(new JwtResponse(jwt,
@@ -72,9 +71,8 @@ public class AuthController {
 
         // Create new user's account
         User user = new User(signUpRequest.getEmail(),
-                signUpRequest.getLastName(),
-                signUpRequest.getFirstName(),
-                passwordEncoder.encode(signUpRequest.getPassword()));
+                passwordEncoder.encode(signUpRequest.getPassword()
+                ), signUpRequest.getLastName(), signUpRequest.getFirstName());
 
         usersRepository.save(user);
 
