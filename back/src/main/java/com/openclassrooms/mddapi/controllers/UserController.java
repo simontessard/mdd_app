@@ -91,7 +91,7 @@ public class UserController {
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cet email est déjà utilisé");
             }
-            
+
             // TO DO : make authentification again after update
             return ResponseEntity.ok().body(this.userMapper.toDto(user));
         } catch (NumberFormatException e) {
