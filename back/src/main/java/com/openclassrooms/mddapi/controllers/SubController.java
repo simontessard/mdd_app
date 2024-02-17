@@ -7,7 +7,9 @@ import com.openclassrooms.mddapi.services.TopicService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,5 +39,11 @@ public class SubController {
                         .orElse("Unknown topic"))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(titles);
+    }
+
+    @DeleteMapping("/{userId}/{topicId}")
+    public ResponseEntity<Map<String, String>> unsubscribeUserFromTopic(@PathVariable Integer userId, @PathVariable Integer topicId) {
+        subscriptionService.unsubscribeUserFromTopic(userId, topicId);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Unsubscription successful"));
     }
 }

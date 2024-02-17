@@ -10,4 +10,6 @@ public interface SubsRepository extends JpaRepository<Sub, Integer> {
     List<Sub> findByUserId(Integer userId);
 
     boolean existsByUserIdAndTopicId(Integer userId, Integer topicId);
+
+    Sub findByUserIdAndTopicId(Integer userId, Integer topicId);
 }

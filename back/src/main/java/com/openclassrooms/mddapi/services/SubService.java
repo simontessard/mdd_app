@@ -26,4 +26,11 @@ public class SubService {
             subsRepository.save(new Sub(topicId, userId));
         }
     }
+
+    public void unsubscribeUserFromTopic(Integer userId, Integer topicId) {
+        Sub sub = subsRepository.findByUserIdAndTopicId(userId, topicId);
+        if (sub != null) {
+            subsRepository.delete(sub);
+        }
+    }
 }
