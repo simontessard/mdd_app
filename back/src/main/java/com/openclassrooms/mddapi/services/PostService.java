@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.repositories.PostsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -17,6 +18,9 @@ public class PostService {
         this.postsRepository = postsRepository;
     }
 
+    public Optional<Post> getPost(Integer id) {
+        return postsRepository.findById(id);
+    }
     public List<Post> getAllPosts() {
         return postsRepository.findAll();
     }
