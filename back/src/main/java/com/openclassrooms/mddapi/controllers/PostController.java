@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.NewPostDTO;
+import com.openclassrooms.mddapi.payload.response.PostResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +28,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPost(@PathVariable Long id) {
-        Optional<Post> post = postService.getPost(id);
+        Optional<PostResponse> post = postService.getPost(id);
         if (post.isPresent()) {
             return ResponseEntity.ok(post.get());
         } else {
