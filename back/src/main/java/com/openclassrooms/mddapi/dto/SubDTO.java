@@ -12,10 +12,10 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class SubDTO {
     @NonNull
-    private Integer userId;
+    private Long userId;
 
     @NonNull
-    private Integer topicId;
+    private Long topicId;
 
     @NonNull
     @Size(max = 100)

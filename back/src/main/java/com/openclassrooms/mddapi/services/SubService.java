@@ -15,11 +15,11 @@ public class SubService {
         this.subsRepository = subscriptionRepository;
     }
 
-    public List<Sub> getSubscriptionsByUserId(Integer userId) {
+    public List<Sub> getSubscriptionsByUserId(Long userId) {
         return subsRepository.findByUserId(userId);
     }
 
-    public void subscribeUserToTopic(Integer userId, Integer topicId) {
+    public void subscribeUserToTopic(Long userId, Long topicId) {
         // Vérifiez d'abord si l'utilisateur est déjà abonné au topic
         if (!subsRepository.existsByUserIdAndTopicId(userId, topicId)) {
             // Si l'utilisateur n'est pas déjà abonné, créez un nouvel abonnement
@@ -27,7 +27,7 @@ public class SubService {
         }
     }
 
-    public void unsubscribeUserFromTopic(Integer userId, Integer topicId) {
+    public void unsubscribeUserFromTopic(Long userId, Long topicId) {
         Sub sub = subsRepository.findByUserIdAndTopicId(userId, topicId);
         if (sub != null) {
             subsRepository.delete(sub);

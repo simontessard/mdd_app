@@ -22,17 +22,17 @@ public class Sub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull
     @Column(name = "topic_id")
-    private Integer topicId;
+    private Long topicId;
 
     @NotNull
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
-    public Sub(Integer topicId, Integer userId) {
+    public Sub(Long topicId, Long userId) {
         this.topicId = topicId;
         this.userId = userId;
     }

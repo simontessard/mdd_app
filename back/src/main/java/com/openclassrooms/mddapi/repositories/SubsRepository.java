@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SubsRepository extends JpaRepository<Sub, Integer> {
+public interface SubsRepository extends JpaRepository<Sub, Long> {
 
-    List<Sub> findByUserId(Integer userId);
+    List<Sub> findByUserId(Long userId);
 
-    boolean existsByUserIdAndTopicId(Integer userId, Integer topicId);
+    boolean existsByUserIdAndTopicId(Long userId, Long topicId);
 
-    Sub findByUserIdAndTopicId(Integer userId, Integer topicId);
+    Sub findByUserIdAndTopicId(Long userId, Long topicId);
 }

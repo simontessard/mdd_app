@@ -19,7 +19,7 @@ public class TopicService {
     public List<Topic> getAllTopics() {
         return topicsRepository.findAll();
     }
-    public Optional<Topic> getTopicById(Integer id) {
+    public Optional<Topic> getTopicById(Long id) {
         return topicsRepository.findById(id);
     }
 }

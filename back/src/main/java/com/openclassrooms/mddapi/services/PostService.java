@@ -18,7 +18,7 @@ public class PostService {
         this.postsRepository = postsRepository;
     }
 
-    public Optional<Post> getPost(Integer id) {
+    public Optional<Post> getPost(Long id) {
         return postsRepository.findById(id);
     }
     public List<Post> getAllPosts() {

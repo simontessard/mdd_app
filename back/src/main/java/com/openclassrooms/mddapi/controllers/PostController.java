@@ -26,7 +26,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPost(@PathVariable Integer id) {
+    public ResponseEntity<?> getPost(@PathVariable Long id) {
         Optional<Post> post = postService.getPost(id);
         if (post.isPresent()) {
             return ResponseEntity.ok(post.get());

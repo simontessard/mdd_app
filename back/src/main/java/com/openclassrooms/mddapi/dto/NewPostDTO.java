@@ -18,5 +18,5 @@ public class NewPostDTO {
     private String content;
 
     @NotNull
-    private Integer topicId;
+    private Long topicId;
 }

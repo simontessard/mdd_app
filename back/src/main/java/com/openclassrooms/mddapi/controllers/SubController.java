@@ -31,7 +31,7 @@ public class SubController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<String>> getSubscriptionsByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List<String>> getSubscriptionsByUserId(@PathVariable Long userId) {
         List<Sub> subscriptions = subscriptionService.getSubscriptionsByUserId(userId);
         List<String> titles = subscriptions.stream()
                 .map(sub -> topicService.getTopicById(sub.getTopicId())
@@ -42,7 +42,7 @@ public class SubController {
     }
 
     @DeleteMapping("/{userId}/{topicId}")
-    public ResponseEntity<Map<String, String>> unsubscribeUserFromTopic(@PathVariable Integer userId, @PathVariable Integer topicId) {
+    public ResponseEntity<Map<String, String>> unsubscribeUserFromTopic(@PathVariable Long userId, @PathVariable Long topicId) {
         subscriptionService.unsubscribeUserFromTopic(userId, topicId);
         return ResponseEntity.ok(Collections.singletonMap("message", "Unsubscription successful"));
     }
