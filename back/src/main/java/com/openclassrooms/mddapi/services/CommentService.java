@@ -11,6 +11,7 @@ import com.openclassrooms.mddapi.repositories.UsersRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,11 @@ public class CommentService {
     }
 
     public ResponseEntity<CommentResponse> createComment(NewCommentDTO newCommentDTO) {
-        Optional<User> optionalUser = userRepository.findById(newCommentDTO.getUserId());
-        if (!optionalUser.isPresent()) {
-            CommentResponse commentResponse = new CommentResponse("User not found with id: " + newCommentDTO.getUserId());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commentResponse);
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalEmail = authentication.getName();
+
+        User user = userRepository.findByEmail(currentPrincipalEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + currentPrincipalEmail));
 
         Optional<Post> optionalPost = postsRepository.findById(newCommentDTO.getPostId());
         if (!optionalPost.isPresent()) {
@@ -52,7 +53,7 @@ public class CommentService {
 
         Comment comment = new Comment();
         comment.setPost(optionalPost.get());
-        comment.setUser(optionalUser.get());
+        comment.setUser(user);
         comment.setComment(newCommentDTO.getComment());
         Comment savedComment = commentsRepository.save(comment);
 

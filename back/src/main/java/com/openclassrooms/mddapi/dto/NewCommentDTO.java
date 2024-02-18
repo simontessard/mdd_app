@@ -13,8 +13,6 @@ public class NewCommentDTO {
     @NotNull
     private Long postId;
 
-    @NotNull
-    private Long userId;
 
     @NotNull
     private String comment;
