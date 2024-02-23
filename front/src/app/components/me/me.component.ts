@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
+import {Sub} from "../../features/topics/interfaces/sub.interface";
+import {Subcription} from "../../interfaces/sub.interface";
 
 @Component({
   selector: 'app-me',
@@ -13,7 +15,7 @@ import { UserService } from '../../services/user.service';
 export class MeComponent implements OnInit {
 
   public user: User | undefined;
-  public subscriptions: string[] = [];
+  public subscriptions?: Subcription[] | undefined;
 
   constructor(private router: Router,
               private postService: PostService,
@@ -27,7 +29,7 @@ export class MeComponent implements OnInit {
       .subscribe((user: User) => this.user = user);
     this.userService
       .getSubscriptions(this.postService.postInformation!.id.toString())
-      .subscribe((subs: string[]) => this.subscriptions = subs);
+      .subscribe((subs: Subcription[]) => this.subscriptions = subs);
   }
 
   public back(): void {

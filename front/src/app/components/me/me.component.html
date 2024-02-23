@@ -17,14 +17,15 @@
   </section>
   <hr class="my-4">
   <section class="flex flex-col justify-center text-center">
-    <h2>Subscriptions <span class="text-base" *ngIf="subscriptions.length > 0">({{subscriptions.length}})</span></h2>
+    <h2>Subscriptions <span class="text-base" *ngIf="subscriptions">({{subscriptions.length}})</span></h2>
     <div class="flex flex-col justify-center text-center">
-      <div *ngIf="subscriptions.length === 0" class="text-center">
+      <div *ngIf="!subscriptions" class="text-center">
         <p>No subscriptions</p>
       </div>
       <ul class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4">
         <mat-card *ngFor="let subscription of subscriptions" class="text-start bg-gray-50 p-4">
-          <h3 class="!font-bold"> {{ subscription }} </h3>
+          <h3 class="!font-bold"> {{ subscription.title }} </h3>
+          <p> {{ subscription.content }} </p>
         </mat-card>
       </ul>
     </div>

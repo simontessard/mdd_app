@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
+import {Sub} from "../features/topics/interfaces/sub.interface";
+import {Subcription} from "../interfaces/sub.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,8 @@ export class UserService {
     return this.httpClient.get<User>(`${this.pathService}/${id}`);
   }
 
-  public getSubscriptions(id: string): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.pathSub}/${id}`);
+  public getSubscriptions(id: string): Observable<Subcription[]> {
+    return this.httpClient.get<Subcription[]>(`${this.pathSub}/${id}`);
   }
 
   public delete(id: string): Observable<any> {
