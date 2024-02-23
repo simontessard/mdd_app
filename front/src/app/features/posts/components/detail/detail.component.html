@@ -1,0 +1,21 @@
+<div class="m3">
+  <mat-card *ngIf="post">
+    <mat-card-title>
+      <button mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>{{post.title | titlecase}}</h1>
+      <div class="created"><i>Published : </i> {{ post.createdAt| date: 'longDate'}}</div>
+    </mat-card-title>
+    <mat-card-content>
+      <div class="my2">
+          <span class="ml1">{{ post.date | date: 'longDate'}}</span>
+      </div>
+      <div class="description">
+        <p>Content:</p>
+        {{ post.content }}
+        <br>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

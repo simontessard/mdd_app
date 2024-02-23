@@ -1,0 +1,36 @@
+<div class="create m3">
+  <mat-card>
+    <mat-card-title>
+        <button mat-icon-button routerLink="/posts">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 *ngIf="onUpdate">Update post</h1>
+    </mat-card-title>
+    <mat-card-content style="padding-left: 0.5rem" *ngIf="postForm">
+      <h1 *ngIf="!onUpdate">Create a new post</h1>
+      <form style="display:flex; flex-direction: column" [formGroup]="postForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Topic</mat-label>
+          <mat-select ngDefaultControl formControlName="topicId">
+            <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">
+              {{topic.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Content</mat-label>
+          <textarea matInput rows="8" formControlName="content"></textarea>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+            Save
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

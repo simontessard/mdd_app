@@ -1,0 +1,25 @@
+<div class="p-4 md:p-6">
+      <mat-card-title class="!my-4">Posts</mat-card-title>
+      <button style="margin-bottom: 1.5rem" data-testid="create-button-admin" mat-raised-button color="primary" routerLink="create">
+        <mat-icon>add</mat-icon>
+        <span class="ml1">Create</span>
+      </button>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      <mat-card class="!flex !flex-col justify-between" *ngFor="let post of (posts$ | async)">
+          <mat-card-title style="margin-bottom: 1rem">{{ post.title }}</mat-card-title>
+          <div class="flex items-center gap-2 !text-lg mb-4">
+            <mat-card-subtitle class="!mb-1" *ngIf="post.author">{{ post.author }}</mat-card-subtitle>
+            <mat-card-subtitle class="!mb-0"> {{ post.createdAt | date: 'longDate'}} </mat-card-subtitle>
+          </div>
+        <mat-card-content>
+          <p> {{ post.content }} </p>
+        </mat-card-content>
+        <mat-card-actions class="!ml-0.5 !mb-2">
+          <button data-testid=detail-button mat-raised-button color="primary" [routerLink]="['detail',post.id]">
+            <span style="margin-right: 0.5rem">Post detail</span>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<section class="mt-4">
+    <button class="!mb-4 !ml-2" mat-icon-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <mat-card-content class="!flex !flex-col !justify-center !text-center !mx-auto">
+      <h1 class="mb-2">User profile</h1>
+      <div class="mb-4" *ngIf="user">
+        <p>Name: {{ user.firstName }} {{ user.lastName | uppercase }}</p>
+        <p>Email: {{ user.email }}</p>
+        <div>
+          <p><i>Create at: </i> {{ user.createdAt | date: 'longDate'}}</p>
+          <p><i>Last update: </i> {{ user.updatedAt| date: 'longDate'}}</p>
+        </div>
+      </div>
+      <button data-testid=logout-button (click)="logout()" class="w-fit mx-auto font-bold text-red-600">Logout</button>
+    </mat-card-content>
+  </section>
+  <hr class="my-4">
+  <section class="flex flex-col justify-center text-center">
+    <h2>Subscriptions <span class="text-base" *ngIf="subscriptions.length > 0">({{subscriptions.length}})</span></h2>
+    <div class="flex flex-col justify-center text-center">
+      <div *ngIf="subscriptions.length === 0" class="text-center">
+        <p>No subscriptions</p>
+      </div>
+      <ul class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4">
+        <mat-card *ngFor="let subscription of subscriptions" class="text-start bg-gray-50 p-4">
+          <h3 class="!font-bold"> {{ subscription }} </h3>
+        </mat-card>
+      </ul>
+    </div>
+</section>
