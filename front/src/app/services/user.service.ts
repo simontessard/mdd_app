@@ -23,6 +23,10 @@ export class UserService {
     return this.httpClient.get<Subcription[]>(`${this.pathSub}/${id}`);
   }
 
+  public unsubscribe(userId: number, topicId : number): Observable<any> {
+    return this.httpClient.delete(`${this.pathSub}/${userId}/${topicId}`);
+  }
+
   public delete(id: string): Observable<any> {
     return this.httpClient.delete(`${this.pathService}/${id}`);
   }

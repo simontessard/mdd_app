@@ -36,6 +36,23 @@ export class MeComponent implements OnInit {
     window.history.back();
   }
 
+  public unsubscribe(subscriptionId: number): void {
+      this.userService
+        .unsubscribe(this.postService.postInformation!.id, subscriptionId)
+        .subscribe(
+          () => {
+            this.matSnackBar.open("You have successfully unsubscribed!", 'Close', { duration: 3000 });
+            // Refresh subscriptions after successful unsubscription
+            this.userService
+              .getSubscriptions(this.postService.postInformation!.id.toString())
+              .subscribe((subs: Subcription[]) => this.subscriptions = subs);
+          },
+          error => {
+            this.matSnackBar.open("An error occurred while unsubscribing. Please try again.", 'Close', { duration: 3000 });
+          }
+        );
+    }
+
   public delete(): void {
     this.userService
       .delete(this.postService.postInformation!.id.toString())

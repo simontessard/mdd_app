@@ -22,11 +22,12 @@
       <div *ngIf="!subscriptions" class="text-center">
         <p>No subscriptions</p>
       </div>
-      <ul class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4">
-        <mat-card *ngFor="let subscription of subscriptions" class="text-start bg-gray-50 p-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-4">
+        <mat-card *ngFor="let subscription of subscriptions" class="!flex !flex-col text-start bg-gray-50 p-4">
           <h3 class="!font-bold"> {{ subscription.title }} </h3>
           <p> {{ subscription.content }} </p>
+          <button mat-raised-button (click)="unsubscribe(subscription.id)" class="!mx-auto bg-mdd-purple font-bold text-xs text-white">Unsubscribe</button>
         </mat-card>
-      </ul>
+      </div>
     </div>
 </section>

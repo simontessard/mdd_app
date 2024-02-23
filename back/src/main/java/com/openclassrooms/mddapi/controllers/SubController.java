@@ -45,6 +45,7 @@ public class SubController {
                     if (topicOptional.isPresent()) {
                         Topic topic = topicOptional.get();
                         return Map.of(
+                                "id", topic.getId().toString(),
                                 "title", topic.getTitle(),
                                 "content", topic.getDescription()
                         );
