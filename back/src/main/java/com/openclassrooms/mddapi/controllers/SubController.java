@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,14 +37,26 @@ public class SubController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<String>> getSubscriptionsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Map<String, String>>> getSubscriptionsByUserId(@PathVariable Long userId) {
         List<Sub> subscriptions = subscriptionService.getSubscriptionsByUserId(userId);
-        List<String> titles = subscriptions.stream()
-                .map(sub -> topicService.getTopicById(sub.getTopicId())
-                        .map(Topic::getTitle)
-                        .orElse("Unknown topic"))
+        List<Map<String, String>> topics = subscriptions.stream()
+                .map(sub -> {
+                    Optional<Topic> topicOptional = topicService.getTopicById(sub.getTopicId());
+                    if (topicOptional.isPresent()) {
+                        Topic topic = topicOptional.get();
+                        return Map.of(
+                                "title", topic.getTitle(),
+                                "content", topic.getDescription()
+                        );
+                    } else {
+                        return Map.of(
+                                "title", "Unknown topic",
+                                "content", "No content"
+                        );
+                    }
+                })
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(titles);
+        return ResponseEntity.ok(topics);
     }
 
     @DeleteMapping("/{userId}/{topicId}")
