@@ -33,4 +33,9 @@ public class SubService {
             subsRepository.delete(sub);
         }
     }
+
+    public boolean isSubscriptionExists(Long userId, Long topicId) {
+        List<Sub> subscriptions = getSubscriptionsByUserId(userId);
+        return subscriptions.stream().anyMatch(sub -> sub.getTopicId().equals(topicId));
+    }
 }

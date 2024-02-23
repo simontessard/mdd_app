@@ -25,9 +25,14 @@ public class SubController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> subscribeUserToTopic(@RequestBody Sub sub) {
-        subscriptionService.subscribeUserToTopic(sub.getUserId(), sub.getTopicId());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Map<String, String>> subscribeUserToTopic(@RequestBody Sub sub) {
+        boolean isSubExists = subscriptionService.isSubscriptionExists(sub.getUserId(), sub.getTopicId());
+        if (isSubExists) {
+            return ResponseEntity.ok(Collections.singletonMap("message", "Already subscribed to this topic"));
+        } else {
+            subscriptionService.subscribeUserToTopic(sub.getUserId(), sub.getTopicId());
+            return ResponseEntity.ok(Collections.singletonMap("message", "Subscription successful"));
+        }
     }
 
     @GetMapping("/{userId}")
