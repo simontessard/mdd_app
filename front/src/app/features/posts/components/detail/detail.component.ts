@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Topic } from '../../../../interfaces/topic.interface';
 import { PostService } from '../../../../services/post.service';
-import { TopicService } from '../../../../services/topic.service';
 import { Post } from '../../interfaces/post.interface';
 import { PostApiService } from '../../services/post-api.service';
+import { Comment } from '../../interfaces/comment.interface';
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-detail',
@@ -15,9 +15,7 @@ import { PostApiService } from '../../services/post-api.service';
 })
 export class DetailComponent implements OnInit {
   public post: Post | undefined;
-  public teacher: Topic | undefined;
-
-  public isParticipate = false;
+  public comments$: Observable<Comment[]>;
 
   public postId: string;
   public userId: string;
@@ -27,37 +25,24 @@ export class DetailComponent implements OnInit {
     private fb: FormBuilder,
     private postService: PostService,
     private postApiService: PostApiService,
-    private topicService: TopicService,
     private matSnackBar: MatSnackBar,
     private router: Router) {
     this.postId = this.route.snapshot.paramMap.get('id')!;
     this.userId = this.postService.postInformation!.id.toString();
+    this.comments$ = of([]);
   }
 
   public ngOnInit(): void {
     this.fetchPost();
+    this.getComments().subscribe(comments => this.comments$ = of(comments));
   }
 
   public back() {
     window.history.back();
   }
 
-  public delete(): void {
-    this.postApiService
-      .delete(this.postId)
-      .subscribe((_: any) => {
-          this.matSnackBar.open('Post deleted !', 'Close', { duration: 3000 });
-          this.router.navigate(['posts']);
-        }
-      );
-  }
-
-  public participate(): void {
-    this.postApiService.participate(this.postId, this.userId).subscribe(_ => this.fetchPost());
-  }
-
-  public unParticipate(): void {
-    this.postApiService.unParticipate(this.postId, this.userId).subscribe(_ => this.fetchPost());
+  public comment(): void {
+    this.postApiService.addComment(this.postId, this.userId).subscribe(_ => this.fetchPost());
   }
 
   private fetchPost(): void {
@@ -65,10 +50,10 @@ export class DetailComponent implements OnInit {
       .detail(this.postId)
       .subscribe((post: Post) => {
         this.post = post;
-        this.isParticipate = post.users.some(u => u === this.postService.postInformation!.id);
-        this.topicService
-          .detail(post.topicId.toString())
-          .subscribe((teacher: Topic) => this.teacher = teacher);
       });
+  }
+
+  private getComments(): Observable<Comment[]> {
+    return this.postApiService.getComments(this.postId.toString());
   }
 }

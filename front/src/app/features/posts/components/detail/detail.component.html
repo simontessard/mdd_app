@@ -1,21 +1,31 @@
-<div class="m3">
-  <mat-card *ngIf="post">
-    <mat-card-title>
-      <button mat-icon-button (click)="back()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <h1>{{post.title | titlecase}}</h1>
-      <div class="created"><i>Published : </i> {{ post.createdAt| date: 'longDate'}}</div>
-    </mat-card-title>
-    <mat-card-content>
-      <div class="my2">
+<div class="p-4">
+  <button class="!mb-2" mat-icon-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <section class="pl-2" *ngIf="post">
+      <div>
+        <h1 class="font-bold">{{post.title | titlecase}}</h1>
+        <div class="flex gap-8 text-base font-normal mb-4">
+          <p> {{ post.createdAt| date: 'longDate'}}</p>
+          <p> {{ post.author }}</p>
+          <p> {{ post.topicId }}</p>
+        </div>
+      </div>
+      <mat-card-content>
+        <div class="my2">
           <span class="ml1">{{ post.date | date: 'longDate'}}</span>
-      </div>
-      <div class="description">
-        <p>Content:</p>
-        {{ post.content }}
-        <br>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        </div>
+        <div class="description">
+          <p>Content: {{ post.content }} </p>
+          <br>
+        </div>
+      </mat-card-content>
+      <hr class="mb-4">
+      <p class="text-lg">Comments</p>
+      <section *ngIf="comments$">
+        <mat-card class="!mb-4" *ngFor="let comment of comments$ | async">
+          <p> {{ comment.comment }} </p>
+        </mat-card>
+      </section>
+  </section>
 </div>

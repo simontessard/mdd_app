@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../interfaces/post.interface';
+import { Comment } from "../interfaces/comment.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { Post } from '../interfaces/post.interface';
 export class PostApiService {
 
   private pathService = 'api/posts';
+  private pathComment = 'api/comments';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -33,12 +35,11 @@ export class PostApiService {
     return this.httpClient.put<Post>(`${this.pathService}/${id}`, post);
   }
 
-  public participate(id: string, userId: string): Observable<void> {
+  public getComments(id: string): Observable<Comment[]> {
+    return this.httpClient.get<Comment[]>(`${this.pathComment}/${id}`);
+  }
+
+  public addComment(id: string, userId: string): Observable<void> {
     return this.httpClient.post<void>(`${this.pathService}/${id}/participate/${userId}`, null);
   }
-
-  public unParticipate(id: string, userId: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.pathService}/${id}/participate/${userId}`);
-  }
-
 }

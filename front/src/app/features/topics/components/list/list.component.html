@@ -1,5 +1,4 @@
 <div class="p-4 md:p-6">
-  <mat-card-title class="!mb-6 !mt-10">Topics</mat-card-title>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
       <mat-card class="!flex !flex-col justify-between" *ngFor="let topic of (topics$ | async)">
           <mat-card-title style="margin-bottom: 1rem">{{ topic.title }}</mat-card-title>
