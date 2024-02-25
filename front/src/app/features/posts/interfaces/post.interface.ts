@@ -1,3 +1,5 @@
+import {Topic} from "../../../interfaces/topic.interface";
+
 export interface Post {
   id?: number;
   title: string;
@@ -5,6 +7,7 @@ export interface Post {
   content: string;
   date: Date;
   topicId: number;
+  topic?: Topic;
   users: number[];
   createdAt?: Date;
   updatedAt?: Date;

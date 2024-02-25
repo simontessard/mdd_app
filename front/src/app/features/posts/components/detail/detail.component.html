@@ -8,7 +8,7 @@
         <div class="flex gap-8 text-base font-normal mb-4">
           <p> {{ post.createdAt| date: 'longDate'}}</p>
           <p> {{ post.author }}</p>
-          <p> {{ post.topicId }}</p>
+          <p> {{ post.topic?.title }}</p>
         </div>
       </div>
       <mat-card-content>
