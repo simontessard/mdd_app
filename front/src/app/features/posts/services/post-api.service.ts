@@ -39,7 +39,11 @@ export class PostApiService {
     return this.httpClient.get<Comment[]>(`${this.pathComment}/${id}`);
   }
 
-  public addComment(id: string, userId: string): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/${id}/participate/${userId}`, null);
+  public addComment(id: string, userId: string, comment: string): Observable<void> {
+    const body = {
+      postId: id,
+      comment: comment
+    };
+    return this.httpClient.post<void>(`${this.pathComment}`, body);
   }
 }

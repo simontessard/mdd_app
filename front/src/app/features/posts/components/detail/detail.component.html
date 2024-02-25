@@ -21,6 +21,7 @@
         </div>
       </mat-card-content>
       <hr class="mb-4">
+      <!-- Comments -->
       <p class="text-lg">Comments</p>
       <section *ngIf="comments$">
         <div class="mb-4 flex max-md:flex-col gap-4" *ngFor="let comment of comments$ | async">
@@ -31,5 +32,14 @@
           </mat-card>
         </div>
       </section>
+    <form *ngIf="postForm" class="md:max-w-lg mx-auto" style="display:flex; flex-direction: column" [formGroup]="postForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="!w-full">
+        <mat-label>Your comment</mat-label>
+        <textarea matInput rows="8" formControlName="comment"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+        Comment
+      </button>
+    </form>
   </section>
 </div>

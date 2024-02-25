@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../../../services/post.service';
@@ -16,6 +16,7 @@ import {Observable, of} from "rxjs";
 export class DetailComponent implements OnInit {
   public post: Post | undefined;
   public comments$: Observable<Comment[]>;
+  public postForm?: FormGroup;
 
   public postId: string;
   public userId: string;
@@ -30,19 +31,17 @@ export class DetailComponent implements OnInit {
     this.postId = this.route.snapshot.paramMap.get('id')!;
     this.userId = this.postService.postInformation!.id.toString();
     this.comments$ = of([]);
+    this.postForm = this.fb.group({});
   }
 
   public ngOnInit(): void {
     this.fetchPost();
     this.getComments().subscribe(comments => this.comments$ = of(comments));
+    this.initForm();
   }
 
   public back() {
     window.history.back();
-  }
-
-  public comment(): void {
-    this.postApiService.addComment(this.postId, this.userId).subscribe(_ => this.fetchPost());
   }
 
   private fetchPost(): void {
@@ -55,5 +54,25 @@ export class DetailComponent implements OnInit {
 
   private getComments(): Observable<Comment[]> {
     return this.postApiService.getComments(this.postId.toString());
+  }
+
+  private initForm(post?: Post, topicId?: number): void {
+    this.postForm = this.fb.group({
+      comment: [
+        post ? post.title : '',
+        [Validators.required]
+      ],
+    });
+  }
+
+  public submit(): void {
+    const comment = this.postForm!.get('comment')!.value;
+    this.postApiService
+      .addComment(this.postId, this.userId, comment)
+      .subscribe(() => {
+        this.matSnackBar.open('Comment added!', 'Close', { duration: 3000 });
+        this.getComments().subscribe(comments => this.comments$ = of(comments));
+        this.postForm!.get('comment')!.setValue('');
+      });
   }
 }
