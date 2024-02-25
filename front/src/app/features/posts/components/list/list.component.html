@@ -13,7 +13,7 @@
   <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
       <mat-card [routerLink]="['detail',post.id]" class="!flex !flex-col justify-between cursor-pointer bg-gray-50" *ngFor="let post of (posts$ | async)">
           <mat-card-title class="!mb-2 !font-bold">{{ post.title }}</mat-card-title>
-          <div class="flex items-center gap-2 !text-lg mb-4">
+          <div class="flex items-center gap-4 md:gap-6 !text-lg mb-4">
             <mat-card-subtitle class="!mb-1 !text-black" *ngIf="post.author">{{ post.author }}</mat-card-subtitle>
             <mat-card-subtitle class="!mb-0 !text-black" *ngIf="post.author">{{ post.topic?.title }}</mat-card-subtitle>
           </div>
