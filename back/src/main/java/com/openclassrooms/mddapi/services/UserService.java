@@ -12,10 +12,6 @@ public class UserService {
         this.usersRepository = usersRepository;
     }
 
-    public void delete(Long id) {
-        this.usersRepository.deleteById(id);
-    }
-
     public User findById(Long id) {
         return this.usersRepository.findById(id).orElse(null);
     }
