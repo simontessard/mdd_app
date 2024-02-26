@@ -17,7 +17,7 @@ export class LoginComponent {
 
   public form = this.fb.group({
     email: [
-      'simonard@gmail.com',
+      'simonarde@gmail.com',
       [
         Validators.required,
         Validators.email

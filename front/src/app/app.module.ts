@@ -14,6 +14,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 const materialModule = [
   MatButtonModule,
@@ -29,14 +31,16 @@ const materialModule = [
     NotFoundComponent,
     MeComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        ...materialModule,
-        MatButtonToggleModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ...materialModule,
+    MatButtonToggleModule,
+    MatSidenavModule,
+    MatListModule
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

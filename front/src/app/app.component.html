@@ -1,14 +1,37 @@
+
+
 <div class="app">
-  <mat-toolbar *ngIf="($isLogged() | async) || isLoginOrRegister()" class="flex justify-between bg-white border-b border-b-mdd-purple">
-    <img width="100" src="assets/logo_p6.png" alt="Logo MDD">
-    <div *ngIf="($isLogged() | async)" class="flex gap-4 md:gap-8 items-center py-2 text-lg">
-      <span routerLink="posts" routerLinkActive="text-mdd-purple font-bold" class="link cursor-pointer">Posts</span>
-      <span routerLink="topics" routerLinkActive="text-mdd-purple font-bold" class="link cursor-pointer">Topics</span>
-      <mat-icon routerLink="me" routerLinkActive="text-mdd-purple" class="link cursor-pointer mr-2">account_circle</mat-icon>
-    </div>
+  <mat-toolbar *ngIf="($isLogged() | async) || isLoginOrRegister()" class="bg-gray-50">
+    <mat-toolbar-row class="flex justify-between bg-white border-b border-b-mdd-purple">
+      <img width="100" src="assets/logo_p6.png" alt="Logo MDD">
+      <div fxShow="true" fxHide.lt-md>
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+        <div *ngIf="($isLogged() | async)" class="flex gap-4 md:gap-8 items-center py-2 text-lg">
+          <button mat-icon-button (click)="sidenav.toggle()" class="md:!hidden">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span routerLink="posts" routerLinkActive="text-mdd-purple font-bold" class="link cursor-pointer max-md:hidden">Posts</span>
+          <span routerLink="topics" routerLinkActive="text-mdd-purple font-bold" class="link cursor-pointer max-md:hidden">Topics</span>
+          <mat-icon routerLink="me" routerLinkActive="text-mdd-purple" class="link cursor-pointer mr-2 max-md:!hidden">account_circle</mat-icon>
+        </div>
+      </div>
+    </mat-toolbar-row>
   </mat-toolbar>
-  <div>
-    <router-outlet>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav class="w-1/2">
+      <mat-nav-list class="!flex !flex-col !justify-between !h-[90vh]">
+        <div>
+          <a mat-list-item (click)="sidenav.toggle()" routerLink="posts" routerLinkActive="text-mdd-purple font-bold" class="link">Posts</a>
+          <a mat-list-item (click)="sidenav.toggle()" routerLink="topics" routerLinkActive="text-mdd-purple font-bold" class="link">Topics</a>
+        </div>
+        <a mat-list-item (click)="sidenav.toggle()" routerLink="me" routerLinkActive="text-mdd-purple" class="link">
+          <mat-icon >account_circle</mat-icon>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet>
         <div *ngIf="!($isLogged() | async) && !isLoginOrRegister()" style="height: 100vh; display: flex; flex-direction: column; justify-content: center; text-align: center; margin: auto">
           <img class="mx-auto w-60" src="assets/logo_p6.png" alt="Logo MDD">
           <div class="flex gap-4 max-md:flex-col items-center mx-auto max-md:w-52">
@@ -16,6 +39,7 @@
             <mat-button-toggle routerLink="register" class="px-2 w-full">Register</mat-button-toggle>
           </div>
         </div>
-    </router-outlet>
-  </div>
+      </router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
