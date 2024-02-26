@@ -35,8 +35,8 @@
         <div *ngIf="!($isLogged() | async) && !isLoginOrRegister()" style="height: 100vh; display: flex; flex-direction: column; justify-content: center; text-align: center; margin: auto">
           <img class="mx-auto w-60" src="assets/logo_p6.png" alt="Logo MDD">
           <div class="flex gap-4 max-md:flex-col items-center mx-auto max-md:w-52">
-            <mat-button-toggle routerLink="login" class="px-2 w-full">Login</mat-button-toggle>
-            <mat-button-toggle routerLink="register" class="px-2 w-full">Register</mat-button-toggle>
+            <button mat-raised-button routerLink="login" class="px-2 w-full">Login</button>
+            <button mat-raised-button routerLink="register" class="px-2 w-full">Register</button>
           </div>
         </div>
       </router-outlet>
