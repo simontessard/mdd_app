@@ -25,7 +25,6 @@ export class FormComponent implements OnInit {
     private fb: FormBuilder,
     private matSnackBar: MatSnackBar,
     private postApiService: PostApiService,
-    private postService: PostService,
     private topicService: TopicService,
     private router: Router
   ) {
@@ -47,15 +46,9 @@ export class FormComponent implements OnInit {
   public submit(): void {
     const post = this.postForm?.value as Post;
 
-    if (!this.onUpdate) {
-      this.postApiService
-        .create(post)
-        .subscribe((_: Post) => this.exitPage('Post created !'));
-    } else {
-      this.postApiService
-        .update(this.id!, post)
-        .subscribe((_: Post) => this.exitPage('Post updated !'));
-    }
+    this.postApiService
+      .create(post)
+      .subscribe((_: Post) => this.exitPage('Post created!'));
   }
 
   private initForm(post?: Post, topicId?: number): void {

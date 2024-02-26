@@ -1,10 +1,10 @@
-<div class="create m3 ">
+<div class="flex w-full">
     <mat-card-content style="padding-left: 0.5rem" *ngIf="postForm">
       <div class="flex items-center justify-between mt-4 mb-6">
         <button mat-icon-button routerLink="/posts">
           <mat-icon>arrow_back</mat-icon>
         </button>
-        <h1 *ngIf="!onUpdate" class="font-bold !pt-4">Create a new post</h1>
+        <h1 *ngIf="!onUpdate" class="font-bold !pt-12">Create a new post</h1>
         <div></div>
       </div>
       <form class="md:max-w-lg mx-auto" style="display:flex; flex-direction: column" [formGroup]="postForm" (ngSubmit)="submit()">

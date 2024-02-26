@@ -26,8 +26,7 @@ export class DetailComponent implements OnInit {
     private fb: FormBuilder,
     private postService: PostService,
     private postApiService: PostApiService,
-    private matSnackBar: MatSnackBar,
-    private router: Router) {
+    private matSnackBar: MatSnackBar) {
     this.postId = this.route.snapshot.paramMap.get('id')!;
     this.userId = this.postService.postInformation!.id.toString();
     this.comments$ = of([]);

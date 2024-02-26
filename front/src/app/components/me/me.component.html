@@ -8,16 +8,16 @@
         <p>Name: {{ user.firstName }} {{ user.lastName | uppercase }}</p>
         <p>Email: {{ user.email }}</p>
         <div>
-          <p><i>Create at: </i> {{ user.createdAt | date: 'longDate'}}</p>
-          <p><i>Last update: </i> {{ user.updatedAt| date: 'longDate'}}</p>
+          <p>Account created : <i>{{ user.createdAt | date: 'longDate'}} </i> </p>
+          <p>Last update: <i>{{ user.updatedAt| date: 'longDate'}} </i> </p>
         </div>
       </div>
       <button data-testid=logout-button (click)="logout()" class="w-fit mx-auto font-bold text-red-600">Logout</button>
     </mat-card-content>
   </section>
-  <hr class="my-4">
+  <hr class="my-4 md:my-8">
   <section class="flex flex-col justify-center text-center">
-    <h2 class="mb-2">Subscriptions <span class="text-base" *ngIf="subscriptions">({{subscriptions.length}})</span></h2>
+    <h2 class="!mb-4 md:!mb-8">Subscriptions <span class="text-base" *ngIf="subscriptions">({{subscriptions.length}})</span></h2>
     <div class="flex flex-col justify-center text-center">
       <div *ngIf="!subscriptions" class="text-center">
         <p>No subscriptions</p>
