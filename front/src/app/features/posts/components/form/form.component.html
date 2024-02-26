@@ -1,11 +1,10 @@
-<div class="flex w-full">
-    <mat-card-content style="padding-left: 0.5rem" *ngIf="postForm">
-      <div class="flex items-center justify-between mt-4 mb-6">
-        <button mat-icon-button routerLink="/posts">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-        <h1 *ngIf="!onUpdate" class="font-bold !pt-12">Create a new post</h1>
-        <div></div>
+<div class="flex p-4 w-full">
+    <button mat-icon-button routerLink="/posts">
+    <mat-icon>arrow_back</mat-icon>
+    </button>
+    <mat-card-content class="!w-full" style="padding-left: 0.5rem" *ngIf="postForm">
+      <div class="flex items-center mt-4 mb-6">
+        <h1 style="margin:0" class="font-bold !pt-12 !mx-auto">Create a new post</h1>
       </div>
       <form class="md:max-w-lg mx-auto" style="display:flex; flex-direction: column" [formGroup]="postForm" (ngSubmit)="submit()">
         <mat-form-field appearance="outline">
@@ -25,8 +24,8 @@
           <textarea matInput rows="8" formControlName="content"></textarea>
         </mat-form-field>
         <div class="mx-auto">
-          <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
-            Save
+          <button class="bg-mdd-purple text-white" mat-raised-button type="submit" [disabled]="postForm.invalid">
+            Create
           </button>
         </div>
       </form>

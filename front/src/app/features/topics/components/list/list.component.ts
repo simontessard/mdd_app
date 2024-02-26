@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostInformation } from '../../../../interfaces/postInformation.interface';
 import { PostService } from '../../../../services/post.service';
-import { TopicApiService } from '../../services/topic-api.service';
 import { Topic } from "../../../../interfaces/topic.interface";
-import {Sub} from "../../interfaces/sub.interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TopicService} from "../../../../services/topic.service";
 
 @Component({
   selector: 'app-list',
@@ -14,16 +13,16 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class ListComponent {
 
-  public topics$: Observable<Topic[]> = this.topicApiService.all();
+  public topics$: Observable<Topic[]> = this.topicService.all();
 
   constructor(
     private postService: PostService,
-    private topicApiService: TopicApiService,
+    private topicService: TopicService,
     private matSnackBar: MatSnackBar
   ) { }
 
   public subscribe(topicId: number): void {
-    this.topicApiService.subscribe(topicId).subscribe(response => {
+    this.topicService.subscribe(topicId).subscribe(response => {
       this.matSnackBar.open(response.message, 'Close', { duration: 4000 });
     });
   }

@@ -2,9 +2,6 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
       <mat-card class="!flex !flex-col justify-between" *ngFor="let topic of (topics$ | async)">
           <mat-card-title style="margin-bottom: 1rem">{{ topic.title }}</mat-card-title>
-          <div>
-            <mat-card-subtitle> {{ topic.createdAt | date: 'longDate'}} </mat-card-subtitle>
-          </div>
           <p> {{ topic.description }} </p>
           <button (click)="subscribe(topic.id)" class="mt-2 mx-auto bg-mdd-purple text-white font-bold px-4 py-2 rounded">Subscribe</button>
       </mat-card>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './features/auth/services/auth.service';
-import { PostInformation } from './interfaces/postInformation.interface';
 import { PostService } from './services/post.service';
 
 @Component({

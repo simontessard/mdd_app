@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { PostService } from '../../services/post.service';
 import { UserService } from '../../services/user.service';
-import {Sub} from "../../features/topics/interfaces/sub.interface";
 import {Subcription} from "../../interfaces/sub.interface";
 
 @Component({

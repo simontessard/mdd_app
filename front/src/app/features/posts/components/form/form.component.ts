@@ -15,10 +15,8 @@ import {Topic} from "../../../../interfaces/topic.interface";
 })
 export class FormComponent implements OnInit {
 
-  public onUpdate: boolean = false;
   public postForm: FormGroup | undefined;
   public topics$ = this.topicService.all();
-  private id: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,16 +29,7 @@ export class FormComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const url = this.router.url;
-    if (url.includes('update')) {
-      this.onUpdate = true;
-      this.id = this.route.snapshot.paramMap.get('id')!;
-      this.postApiService
-        .detail(this.id)
-        .subscribe((post: Post) => this.initForm(post));
-    } else {
-      this.initForm();
-    }
+    this.initForm();
   }
 
   public submit(): void {
@@ -51,18 +40,15 @@ export class FormComponent implements OnInit {
       .subscribe((_: Post) => this.exitPage('Post created!'));
   }
 
-  private initForm(post?: Post, topicId?: number): void {
+  private initForm(): void {
     this.postForm = this.fb.group({
-      title: [
-        post ? post.title : '',
+      title: ['',
         [Validators.required]
       ],
-      topicId: [
-        topicId ? topicId : '',
+      topicId: ['',
         [Validators.required]
       ],
-      content: [
-        post ? post.content : '',
+      content: ['',
         [
           Validators.required,
           Validators.max(2000)
