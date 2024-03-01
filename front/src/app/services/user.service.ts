@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import {Sub} from "../features/topics/interfaces/sub.interface";
 import {Subcription} from "../interfaces/sub.interface";
+import {updateMe} from "../components/interfaces/updateMe.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class UserService {
     return this.httpClient.delete(`${this.pathSub}/${userId}/${topicId}`);
   }
 
-  public delete(id: string): Observable<any> {
-    return this.httpClient.delete(`${this.pathService}/${id}`);
+  public updateProfile(userId : number, updatedUser: updateMe): Observable<any> { // Add this method
+    return this.httpClient.put<any>(`${this.pathService}/${userId}`, updatedUser);
   }
 }

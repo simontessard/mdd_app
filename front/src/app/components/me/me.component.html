@@ -5,8 +5,17 @@
     <mat-card-content class="!flex !flex-col !justify-center !text-center !mx-auto">
       <h1 class="mb-2">User profile</h1>
       <div class="mb-4" *ngIf="user">
-        <p>Name: {{ user.firstName }} {{ user.lastName | uppercase }}</p>
-        <p>Email: {{ user.email }}</p>
+        <form class="md:max-w-lg mx-auto mb-6 md:mb-8" style="display:flex; flex-direction: column" [formGroup]="infoForm" (ngSubmit)="submitUpdateProfile()">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" ngModelGroup email="true" formControlName="email">
+          </mat-form-field>
+          <button mat-raised-button type="submit" [disabled]="infoForm.invalid" class="!mx-auto bg-mdd-purple font-bold text-xs text-white">Save</button>
+        </form>
         <div>
           <p>Account created : <i>{{ user.createdAt | date: 'longDate'}} </i> </p>
           <p>Last update: <i>{{ user.updatedAt| date: 'longDate'}} </i> </p>

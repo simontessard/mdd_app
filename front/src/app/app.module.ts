@@ -16,6 +16,9 @@ import { MeComponent } from './components/me/me.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 const materialModule = [
   MatButtonModule,
@@ -39,7 +42,11 @@ const materialModule = [
     ...materialModule,
     MatButtonToggleModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
