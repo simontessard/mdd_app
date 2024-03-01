@@ -1,6 +1,7 @@
 
 
 <div class="app">
+  <!-- Horizontal navbar when logged -->
   <mat-toolbar *ngIf="($isLogged() | async) || isLoginOrRegister()" class="bg-gray-50">
     <mat-toolbar-row class="flex justify-between bg-white border-b border-b-mdd-purple">
       <img width="100" src="assets/logo_p6.png" alt="Logo MDD">
@@ -18,6 +19,7 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
+  <!-- Side vertical navbar for mobile when logged -->
   <mat-sidenav-container>
     <mat-sidenav #sidenav class="w-1/2">
       <mat-nav-list class="!flex !flex-col !justify-between !h-[90vh]">
@@ -30,8 +32,10 @@
         </a>
       </mat-nav-list>
     </mat-sidenav>
+    <!-- Main content -->
     <mat-sidenav-content fxFlexFill>
       <router-outlet>
+        <!-- Content when user isn't logged -->
         <div *ngIf="!($isLogged() | async) && !isLoginOrRegister()" style="height: 100vh; display: flex; flex-direction: column; justify-content: center; text-align: center; margin: auto">
           <img class="mx-auto w-60" src="assets/logo_p6.png" alt="Logo MDD">
           <div class="flex gap-4 max-md:flex-col items-center mx-auto max-md:w-52">
