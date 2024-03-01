@@ -21,6 +21,9 @@ public class UserDTO {
     @Email
     private String email;
 
+    @Size(max = 50)
+    private String name;
+
     @NonNull
     @Size(max = 20)
     private String lastName;

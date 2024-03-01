@@ -1,34 +1,27 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.mappers.UserMapper;
+import com.openclassrooms.mddapi.dto.UpdatedUserDTO;
+import com.openclassrooms.mddapi.dto.UserDTO;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Objects;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserMapper userMapper;
     private final UserService userService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public UserController(UserService userService,
-                          UserMapper userMapper, PasswordEncoder passwordEncoder) {
-        this.userMapper = userMapper;
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/{id}")
@@ -39,15 +32,21 @@ public class UserController {
             if (user == null) {
                 return ResponseEntity.notFound().build();
             }
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setName(user.getName());
+            userDTO.setCreatedAt(user.getCreatedAt());
+            userDTO.setUpdatedAt(user.getUpdatedAt());
 
-            return ResponseEntity.ok().body(this.userMapper.toDto(user));
+            return ResponseEntity.ok().body(userDTO);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody User updatedUser) {
+    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody UpdatedUserDTO updatedUserDTO) {
         try {
             User user = this.userService.findById(Long.valueOf(id));
 
@@ -61,17 +60,16 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
 
-            user.setEmail(updatedUser.getEmail());
-            user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            user.setEmail(updatedUserDTO.getEmail());
+            user.setName(updatedUserDTO.getName());
 
             try {
                 this.userService.save(user);
             } catch (DataIntegrityViolationException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cet email est déjà utilisé");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already in use");
             }
+            return ResponseEntity.ok(Collections.singletonMap("message", "Updated profile successfully"));
 
-            // TO DO : make authentification again after update
-            return ResponseEntity.ok().body(this.userMapper.toDto(user));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }

@@ -57,6 +57,7 @@ export class MeComponent implements OnInit {
     this.userService.updateProfile(this.postService.postInformation!.id, updatedMe).subscribe(response => {
       this.matSnackBar.open(response.message, 'Close', { duration: 4000 });
     });
+    this.logout();
   }
 
   public back(): void {
