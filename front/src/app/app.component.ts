@@ -9,11 +9,15 @@ import { PostService } from './services/post.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   constructor(
     private authService: AuthService,
     private router: Router,
     private postService: PostService) {
+  }
+
+  ngOnInit() {
+    this.postService.checkAuthenticationStatus();
   }
 
   public $isLogged(): Observable<boolean> {

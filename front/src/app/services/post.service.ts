@@ -12,6 +12,7 @@ export class PostService {
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
   private readonly TOKEN_KEY = 'jwtToken';
+  private readonly USER_DATA_KEY = 'userData';
 
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
@@ -22,6 +23,7 @@ export class PostService {
     this.isLogged = true;
     this.next();
     localStorage.setItem(this.TOKEN_KEY, user.token);
+    localStorage.setItem(this.USER_DATA_KEY, JSON.stringify(user));
   }
 
   public logOut(): void {
@@ -29,6 +31,17 @@ export class PostService {
     this.isLogged = false;
     this.next();
     localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_DATA_KEY);
+  }
+
+  public checkAuthenticationStatus(): void {
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    const userData = localStorage.getItem(this.USER_DATA_KEY);
+    if (token && userData) {
+      this.isLogged = true;
+      this.isLoggedSubject.next(this.isLogged);
+      this.postInformation = JSON.parse(userData);
+    }
   }
 
   private next(): void {
