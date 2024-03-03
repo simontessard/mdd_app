@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import javax.validation.Valid;
 
+import com.openclassrooms.mddapi.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,14 +33,17 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UsersRepository usersRepository;
 
+    private final UserService userService;
+
     AuthController(AuthenticationManager authenticationManager,
                    PasswordEncoder passwordEncoder,
                    JwtUtils jwtUtils,
-                   UsersRepository usersRepository) {
+                   UsersRepository usersRepository, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
         this.usersRepository = usersRepository;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -67,6 +71,13 @@ public class AuthController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
+        }
+
+        // Validate password
+        if (!userService.isValidPassword(signUpRequest.getPassword())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Password does not meet the requirements!"));
         }
 
         // Create new user's account
