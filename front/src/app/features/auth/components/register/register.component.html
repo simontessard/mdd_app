@@ -2,25 +2,27 @@
     <button class="!ml-2" mat-icon-button (click)="back()">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <mat-card style="margin-inline: auto">
-        <mat-card-title style="margin-bottom: 1rem">Register</mat-card-title>
+    <mat-card style="margin-inline: auto" class="!border-0 bg-gray-50 !shadow-none">
+        <mat-card-title class="!my-6 !text-center">Register</mat-card-title>
         <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content style="display: flex; flex-direction: column">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="First name" formControlName="firstName">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="Last name" formControlName="lastName">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="Email" formControlName="email">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="Password" formControlName="password">
                 </mat-form-field>
             </mat-card-content>
-            <button mat-raised-button class="bg-mdd-purple text-white" type="submit" [disabled]="form.invalid">Submit</button>
+          <div class="flex justify-center">
+            <button mat-raised-button class="bg-mdd-purple text-white" type="submit" [disabled]="form.invalid">Sign up</button>
             <span *ngIf="onError">An error occurred</span>
+          </div>
         </form>
     </mat-card>
 </div>
