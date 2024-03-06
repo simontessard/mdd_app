@@ -1,15 +1,18 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dto.NewPostDTO;
-import com.openclassrooms.mddapi.models.Comment;
-import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.Topic;
+import com.openclassrooms.mddapi.models.*;
 import com.openclassrooms.mddapi.payload.response.PostResponse;
 import com.openclassrooms.mddapi.repositories.PostsRepository;
+import com.openclassrooms.mddapi.repositories.UsersRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -18,9 +21,14 @@ public class PostService {
 
     private final CommentService commentService;
 
-    public PostService(PostsRepository postsRepository, CommentService commentService) {
+    private final SubService subService;
+    private final UsersRepository userRepository;
+
+    public PostService(PostsRepository postsRepository, CommentService commentService, SubService subService, UsersRepository userRepository) {
         this.postsRepository = postsRepository;
         this.commentService = commentService;
+        this.subService = subService;
+        this.userRepository = userRepository;
     }
 
     public Optional<PostResponse> getPost(Long id) {
@@ -44,7 +52,18 @@ public class PostService {
         return Optional.of(postResponse);
     }
     public List<Post> getAllPosts() {
-        return postsRepository.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalEmail = authentication.getName();
+
+        User user = userRepository.findByEmail(currentPrincipalEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + currentPrincipalEmail));
+
+        List<Sub> subscriptions = subService.getSubscriptionsByUserId(user.getId());
+        List<Long> topicIds = subscriptions.stream().map(Sub::getTopicId).collect(Collectors.toList());
+
+        return postsRepository.findAll().stream()
+                .filter(post -> topicIds.contains(post.getTopic().getId()))
+                .collect(Collectors.toList());
     }
 
     public Post createPost(NewPostDTO newPostDTO, String author) {
